@@ -1,0 +1,672 @@
+// ** STATIC VARIABLE ** //
+// - Single copy of variable is shared by all the objects of a class.
+// - Only one copy of a static variable exists for the entire class, regardless of how many objects are created. 
+// - This means that changes made to a static variable through one object are reflected in all other objects of the class.
+#include<iostream>
+using namespace std;
+
+class A{
+    public: 
+    int x=2;
+    static int y;
+    
+    void printValue(){
+        cout<<"x: "<<x<<endl;
+        cout<<"y: "<<y<<endl;
+    }
+};
+    int A::y=10;
+    //We need to initialize static member variables like y outside the class because static members are not part of individual objects of the class. Instead, they belong to the class itself and are shared by all objects of that class.
+int main(){
+    A obj1,obj2;
+    obj1.x=33;       // value of x will change only for obj1 and not for obj2.
+    obj2.y=50;       // value of y will change for both obj1 and obj2.
+    
+    obj1.printValue();
+    obj2.printValue();
+}
+
+// Here area of class A also gets copied in class B but area of B is printed, that is area of class A is overridden by class B.
+
+// ** POLYMORPHISM ** //
+// ** FUNCTION OVERLOADING AND FUNCTION OVERRIDING ** //
+
+// Function overloading :- Compile time polymorphism
+// Function overriding :- Run time polymorphism
+
+// A) Function overloading
+// (Name of functions are same but no. of arguments or types of arguments are different.)
+
+#include<iostream>
+using namespace std;
+
+// int area(int a){
+//     return a*a;
+// }
+
+// int area(int a, int b){
+//     return a*b;
+// }
+// int main(){
+//     int b = area(4);
+//     int c = area(3,4);
+//     cout<<"Area1 is : "<<b<<endl;
+//     cout<<"Area2 is : "<<c;
+// }
+
+//function overloading using templates.
+
+Normal Templates (Non-Variadic Templates): Are primarily used for writing code that works with different types of arguments (e.g., int, double, string, custom classes) but for a fixed number of arguments.
+
+Example: template <typename T> T max(T a, T b) always takes exactly two arguments, but T can be any type.
+
+Variadic Templates: Are used for writing code that can accept a different number of arguments (from zero to many), and these arguments can also be of different types.
+
+Example: template <typename T, typename... Args> auto sum(T first, Args... rest) can take one, two, three, or any number of arguments.
+#include<bits/stdc++.h>
+
+using namespace std;
+
+template<typename T>
+
+T areaofsquare(T side){
+    return side*side;
+}
+
+template<typename T>
+
+T areaofrectangle(T a, T b){
+    return a*b;
+}
+
+template<typename T, typename...Args>
+
+auto area(T first, Args...rest){
+    return (first*...*rest);
+}
+
+int main()
+    int ans1 = areaofsquare(5);
+    cout<<ans1<<endl;
+    int ans2 = areaofrectangle(2,3);
+    cout<<ans2<<endl;
+    int ans3 = area(1.0,2.4,10);
+    cout<<ans3<<endl;
+    return 0;
+}
+
+// B) Function overriding
+//function overriding in OOP is when a subclass (or derived class) provides its own specific implementation for a function that is already defined in its superclass (or base class).
+class A{
+    public:
+    void area(){
+        cout<<"Hii rohit"<<endl;
+    };
+};
+
+class B: public A{
+    public:
+    void area(){
+        cout<<"Hii"<<endl;
+    };
+};
+
+int main(){
+    B obj;
+    obj.area();
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+// ** FRIEND FUNCTION ** //
+// - A friend function can access both private and protected members of a class.
+#include<iostream>
+using namespace std;
+ 
+class Box{
+    private:
+    int length;
+    public:
+    Box(){
+        length = 0;
+    }
+    
+    friend int printLength(Box);    //creating a friend function inside a class.
+};
+
+int printLength(Box b){          // defining the friend function.
+    b.length +=10;
+    return b.length; 
+}
+
+int main(){
+    Box b;
+    cout<<"Length of Box is : "<<printLength(b)<<endl;
+    return 0;
+}
+
+
+
+
+
+// ** CALL by VALUE & CALL by REFERENCE ** //
+
+#include<iostream>
+using namespace std;
+ //formal parameter
+void func(int a){
+    a=20;
+}
+
+void func2(int &a){
+    a=20;
+}
+int main(){
+    int a=40;
+    func(a);   //(actual parameter)    //This is called call by value
+    // Actual parameter gets copy in the formal parameter, so original value does not change.
+    // Sends a copy of the variable , so value is changed only in the copy and not in the actual variable.
+    cout<<"The value of a is : "<<a<<endl;
+    
+    func2(a);
+    // Sends the address of the variable, so value is changed at the address 
+    cout<<"The value of a is : "<<a<<endl;
+    return 0;
+}
+
+
+
+
+
+//** CONSTRUCTOR AND DESTRUCTOR **//
+#include<iostream>
+using namespace std;
+
+// constructor is a member function of a class which is used to initialize objects and is automatically called when object is created.
+
+class Z{
+    Z(){
+        cout<<"This is called default constructor(does not take any arguments)"<<endl;
+        cout<<"It has no return type, not even void"<<endl;
+        cout<<"Default Constructor is automatically called whenever object is created"<<endl;
+        cout<<"Constructor is used to initialize the variable or object"<<endl;
+    }
+    
+    Z(int x){
+        cout<<"Parameterized Constructor"<<endl;
+        cout<<"The value of x is : "<<x<<endl;
+    }
+    
+    ~Z(){
+        cout<<"Destructor called"<<endl;
+        cout<<"automatically called"<<endl;
+        cout<<"Destroys the object created by Constructor and memory is released"<<endl;
+        cout<<"whenever program scopes ends Destructor is automatically called"<<endl;
+        cout<<"Only Constructor can be overloaded but Destructor cannot be overloaded"<<endl;
+    }
+};
+
+
+int main(){
+    Z obj;
+    Z obj(12);
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+// ** REFERENCE VS POINTER ** //
+
+#include<iostream>
+using namespace std;
+
+int main(){
+
+    // CREATING A REFERENCE
+    // Reference is an alias(alternative name) to the variable.
+    int x=20;
+    int &ref = x;
+    ref = 40;
+    cout<<x<<endl;     //output : 40
+    
+
+    // CREATING A POINTER
+    int a=2;
+    int *pt = &a;
+    cout<<pt<<endl;  //address
+    cout<<*pt;       //value  
+    /* The above line means
+    
+    pt is pointing to the address(&) of variable 'a'.
+    *pt is pointing to the value of the variable 'a'.
+    
+    */
+    
+    cout<<y<<endl;    //prints the address 
+    cout<<*y<<endl;   //prints the value 
+
+
+
+    // Difference betw Reference & Pointer 
+    // 1) A reference cannot be null , but a pointer can be null.
+    // 2) A pointer can be declared as void but a reference can never be void.
+    // 3) The pointer variable has n-levels/multiple levels of indirection i.e.
+        // a) single-pointer : a pointer pointing to address of a variable.
+        // b) double-pointer : a pointer pointing to address of another pointer(which is pointing to a variable).
+        // c) triple-pointer : a pointer pointing to address of another pointer which is again pointing to address of another pointer(which is pointing to variable).
+        // whereas, the reference variable has only one/single level of inheritance.
+    // 4) Once a reference is created, it cannot be later made to reference another object; it cannot be resetted. This is often done with pointers.
+    
+    
+    int a = 2;
+    void *pt = &a;    // it is valid
+    int &ref = a;     // it is not valid
+    
+    cout<<pt<<endl;    // address of variable
+    cout<<&ref<<endl;  // address of variable
+    
+    return 0;
+}
+
+// showcasing single, double, triple pointer 
+#include<iostream>
+
+using namespace std;
+
+int main(){
+    int a = 20;
+    
+    // Single pointer
+    int *ptr = &a;
+    
+    cout<<ptr<<endl;    // address of a 
+    cout<<*ptr<<endl;   // value of a 
+    
+    // Double pointer
+    int **ptr1 = &ptr;    
+    cout<<ptr1<<endl;   // address of ptr
+    cout<<*ptr1<<endl;  // value of ptr
+    
+    // Triple pointer
+    int ***ptr2 = &ptr1;
+    cout<<ptr2<<endl;   // address of ptr1
+    cout<<*ptr2<<endl;  // value of ptr1
+}
+
+
+
+
+
+
+
+
+
+// ** VIRTUAL FUNCTION ** //
+#include <iostream>
+
+using namespace std;
+
+class Base{
+    public:
+    virtual void print(){
+        int x=20;
+        cout<<x<<endl;
+    }
+};
+
+class Derived: public Base{
+    public : 
+    void print(){
+        int y=10000;
+        cout<<y<<endl;
+    }
+};
+
+int main()
+{
+    Derived derived1;
+    Base *base = &derived1;
+    base->print();
+
+    return 0;
+}
+
+
+
+
+
+
+
+// ** TYPE CONVERSION ** //
+// 1) implicit type conversion : automatically converts.
+// 2) explicit type conversion(typecasting) : user converts manually.
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+   // Type conversion is the process that converts the predefined data type of one variable into an appropriate data type.
+   
+   // 1) implicit type conversion
+   
+  int num1 = 25;
+  float num2;
+  num2 = num1;
+   
+  // convert int value into float variable using explicit conversion.
+  cout<<num1<<endl;
+   
+   
+   // 2) Explicit type conversion
+   
+   int num1=25;
+   float num2;
+   
+   num2=(float) num1;
+   cout<<num2;
+   return 0;
+}
+
+
+
+
+
+
+
+// ** DEFAULT PARAMETER ** //
+
+#include<iostream>
+using namespace std;
+ 
+// here values of arguments z & w are set by default(default parameters).
+int sum(int x,int y,int z=0,int w=0){
+    return (x+y+z+w);
+}
+
+int main(){
+    cout<<sum(1,2)<<endl;         // only two arguments are passed here, so default values are taken for other two.    
+    cout<<sum(1,2,3)<<endl;       // only three arguments are passed here, so default values are taken for last one.    
+    cout<<sum(1,2,3,4)<<endl;     // all the arguments are passed.
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+// ** INLINE FUNCTION ** //
+// Inline function is a func that is expanded in line when it is called.
+// When inline is called, whole code of inline func gets inserted or substituted at the point of inline function call.
+// This substitution is performed by C++ compiler at the compile time.
+// Inline function may increase efficiency if it is small.
+
+// Demerit of inline function
+// - if the execution time of function is less than the switching time from the caller function to called function,
+//   then, there is no need to use inline function.
+// - Matlab agar function ko wahan tak jaane mein hi zyada time lag raha hai toh inline karne ki zaroorat nahi.
+// - Kyunki execution, jaane se pehele hi khatam ho jaata hai.
+
+
+
+#include<iostream>
+using namespace std;
+ 
+inline int cube(int s){
+    return s*s*s;
+}
+
+int main(){
+    cout<<"The cube of 3 is : "<<cube(3)<<endl;
+    
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+// ** MACROS ** //
+// - Macros are a piece of code in a program which is given some name, whenever this name is encountered
+//   by the compiler, the compiler replaces the name with the actual piece of code .
+// - The '#define' directive is used to define the macro.
+
+
+#include<iostream>
+
+using namespace std;
+
+#define LIMIT 5            // simple MACRO
+#define AREA(l,b) (l*b)    // MACRO with parameter
+int main(){
+    for(int i=0;i<LIMIT;i++){
+        cout<<i<<" ";
+    }
+    cout<<endl;
+    
+    int l1=30,l2=5,area;
+    area = AREA(l1,l2);
+    cout<<"Area of rectangle is : "<<area<<endl;
+    
+    return 0;
+}
+
+// EXAMPLE for MACROS
+#include<iostream>
+#include<math.h>
+using namespace std;
+#define PI 3.14
+#define NAME(name , lname) (name +" "+ lname)
+int main(){
+    float area,r=5;
+    area = PI * pow(r,2);
+    cout<<"Area of circle is : "<<area<<endl;
+    
+    string name,lname;
+    cout<<"Enter your first name : ";
+    cin>>name;
+    cout<<"Enter your last name : ";
+    cin>>lname;
+    cout<<"Your name is : "<<NAME(name,lname)<<endl;
+    
+}
+
+
+
+
+
+
+
+//** EXCEPTION HANDLING **//
+
+// Exception Handling:
+// - Exceptions are run-time anomalies or abnormal conditions that a program encounters during its execution.
+
+// try block : represents a block of code that may contain an exception.
+
+// catch block : represents a block of code that is executed when a particular exception is thrown.
+
+// throw block : Used to throw an exception. Also used to list the exceptions that a function throws, but doesn't handle itself.
+
+
+// finally :- finally keyword is used to create a block of code that follows a try block.
+//          - (It is optional) It always executes, whether an exception has occured or not.
+//          - Using a finally block allows you to run any clean-up type statements that you just wish to execute, despite what happens within the protected code.
+
+// finalize():- The finalize() method is used just before object is destroyed and can be called just prior to object creation.
+//            - Its primary purpose is to provide a mechanism for objects to perform cleanup activities before their memory is released.
+//            - The finalize() method is called at most once for each object.
+
+
+
+
+
+
+
+
+// ** THIS POINTER ** //
+
+ #include<iostream>
+ using namespace std;
+ class A{
+    int a;     //<---this is called instance/class variable.
+    public:
+    void setData(int a){      //<--- this is called local variable.
+    // A & setData(int a){
+        // this is pointing to the class variable.
+        this->a = a;
+        // if we write a=a, then priority is given to the local variable, that's why we should use 'this' keyword.
+        // we can also 'return' using 'this' keyword.
+        // If we write 'return this' , then we will get the pointer which is pointing to the object(who has called the member function).
+        // return *this;   //for returning like this we write A& setData(int a), as above.
+    }
+    void getData(){
+        cout<<"the value of a is : "<<a<<endl;
+    }
+};
+
+int main(){
+    // 'this' is keyword which is a pointer which points to the object which invokes the member function.
+    A obj;
+    obj.setData(4);   //now this setData(4) is returning us an object, so we can directly use obj.setData(4).getData();
+    obj.getData();
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ** COPY CONSTRUCTOR ** //
+// - Copy constructor is used to declare and initialise an object from another object.
+// - The compiler automatically generates a default copy constructor for a class if you don't define one explicitly. 
+// - This default copy constructor performs a member-wise copy, which means it copies the values of each member variable from the source object to the newly created object.
+
+// - We can define Copy Constructor explicitly as:
+/* 
+        MyClass(const MyClass& other) {
+            data = other.data;
+        }
+*/
+
+
+#include<iostream>
+using namespace std;
+
+class example{
+    int data;
+    public:
+    example(){               // default constructor
+        
+    }
+    
+    example(int x){          // parameterized constructor
+        data = x;
+    }
+    
+    void display(){
+        cout<<"data->"<<data<<endl;
+    }
+};
+
+int main(){
+    example obj1(5);
+    example objc(obj1);
+    objc.display();
+    
+    return 0;
+}
+
+
+/* When we create copy of an object without creating a copy constructor, the compiler itself creates a copy constructor, but it is a type of shallow constructor. And when we explicitly create a copy constructor and then create a copy of the original object, then it does the Deep copy so the objects are independent of each other.
+*/
+
+
+
+
+
+
+
+
+// ** ABSTRACT CLASS AND INTERFACE ** //
+
+// - A class having at least one pure virtual function is called abstract class.
+// - We cannot create objects for the abstract class otherwise it will give an error.
+// - The C++ interfaces are implemented using abstract classes.
+// - The purpose of an abstract class is to provide an appropriate base class from which other classes can inherit.
+// - "Pure Virtual Function is a Virtual function with no body".
+// - Pure virtual Functions are virtual functions with no definition. They start with virtual keyword and ends with = 0.
+
+
+// Difference betw Virtual and Pure Virtual Function.
+// - Virtual Function is declared with keyword 'virtual' at the start of declaration.
+// - Virtual Function makes its class a polymorphic base class. 
+// - Derived classes may override the virtual function and redefine the behavior.
+// - Virtual Function called from base class pointer/reference will be decided on run time. Which is called run time binding.
+
+// - Pure Virtual Function is declared as virtual function_name(function arguments) = 0;
+// - Pure Virtual Function provides the similar functionality as Virtual Function.
+// - Apart from that Pure Virtual Function makes class a Abstract Class.
+// - It means, if a class have Pure Virtual Function, class can't be instantiated. Only reference or pointers can be created of such class.
+
+
+#include<iostream>
+using namespace std;
+class A{
+    public:
+    virtual void sum(int a, int b) = 0;
+    void print(){
+        cout<<"Hello World!!"<<endl;
+    }
+};
+
+class B:public A{
+    private:
+    int x, y;
+    
+    public:
+    
+    void sum(int a ,int b){
+        x=a;
+        y=b;
+        int result = x+y;
+        cout<<result<<endl;
+    }
+};
+
+int main(){
+    B objb;
+    cout<<"sum of two numbers is : ";
+    objb.sum(3,4);
+    return 0;
+}
