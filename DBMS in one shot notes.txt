@@ -1,0 +1,241 @@
+- Difference between DBMS and RDBMS
+1) DBMS :- Stores data in unstructered way.
+e.g:- Keeping books on a shelf in random manner.
+
+2) RDBMS :- Stores data in pre-defined format like tables with rows and columns.
+e.g:- Keeping books on a shelf in predefined structure, such that the books are related to each other.
+
+
+
+
+DBMS - DataBase Management System
+Database - Group of interrelated records stored in a proper organised form.
+Management System - It is a software/system that manages the Database.
+
+Adv:
+1) Control data redundancy : Reduces the duplicate data.
+2) Easily Maintenance.
+3) Reduce time : It reduces the time for searching & sorting in Database.
+4) Backup : Can keep copy/backup of data. 
+
+SQL : Data is stored in tubular form. 
+NoSQL : Data is stored in heirarchical form.
+
+SQL(tubular form)
+
+-****Attributes: The columns in the table are called attributes.
+ROLL NO    DOB       AGE   NAME       MOBILE
+
+1         12/04/2001  21   SHIVAM     999999999
+
+2         06/12/1999  23   SOMU       888888888
+
+3         04/02/2000  22   GOLU       777777777
+
+
+-Types of Attributes:
+1) Simple Attributes :- Attributes which cannot be further divided.
+e.g :  AGE in above table
+
+2) Composite Attributes :- Attributes which can be further divided.
+e.g :  NAME in above table, NAME can be divided as First_Name & Last_Name.
+
+3) Multi-Valued Attributes :- Attributes which can have multiple values (multiple values in a column).
+e.g :  MOBILE in above table, a person can have multiple Mob Nos.
+
+4) Derived Attributes :- Attributes which can be derived from other attributes.
+e.g :  AGE can be derived from DOB in above table.
+
+5) KEY Attributes :- Attributes which can be used to uniquely identify any row(It is a column having unique values).
+e.g :  ROLL NO column in above table has unique values which can be used to uniquely identify data(record) of each row.
+
+
+
+
+-****KEYS in SQL: Combination of attributes which can uniquely identify any record.
+
+1) SUPER KEY: It is a combination of all the keys which can uniquely identify a record.
+e.g. : Combining ROLL NO, DOB, AGE, NAME to get the MOBILE NO. in the above table.
+
+2) CANDIDATE KEY:(Minimum number of attributes)Minimum Subset of SUPER KEY is called CANDIDATE KEY.
+e.g. : Combining DOB, ROLL NO to get the MOBILE NO. in the above table.
+
+3) PRIMARY KEY: One attribute from the set of attributes in Candidate key is called PRIMARY KEY.
+e.g. : ROLL NO can be acted as PRIMARY KEY , because it can alone uniquely identify the data.
+
+4) ALTERNATE KEY: CANDIDATE KEY other than the PRIMARY KEY is called ALTERNATE KEY.
+e.g : DOB is the remaining one from CANDIDATE KEY so it will be the ALTERNATE KEY.
+
+5) FOREIGN KEY: An Attribute in the current table which is a PRIMARY KEY in another table, is called FOREIGN KEY.
+e.g. : IF MOBILE NO is an attribute in the current table, but is also a PRIMARY KEY in other table then it is called as FOREIGN KEY.
+
+
+
+-****TYPES OF SQL COMMAND:
+1) DDL-Data Definition Language. It works on the structure of the table.
+- Shortcut : DR.CAT
+- D-> DROP:- Delete the complete table.
+- R-> RENAME:- Rename the table.
+- C-> CREATE:- Create a table.
+- A-> ALTER:- Add/delete the columns (Change the structure).
+- T-> TRUNCATE:- Delete the data of the table.
+
+2) DML- Data Manipulation Language. It works on the data of the table(Manipulate the data).
+- Shortcut : DIU
+- D-> DELETE:- Delete a Data.
+- I-> INSERT:- Insert a Data.
+- U-> UPDATE:- Update a Data.
+
+
+3) DCL- Data Control Language. The access of data should be given to whom. Who can access the data.
+- grant -> to give permission. 
+- revoke -> to take permission.
+
+
+4) TCL- Transaction Control Language.
+- commit -> The output of the transaction should be visible in the database.
+- Roll back -> return to the previous state.
+- Savepoint -> The point at which Roll Back occurs.
+
+5) DQL- Data Query Language
+- SELECT
+
+
+-****CONSTRAINTS IN SQL:
+1) NOT NULL-> Data in that column cannot be null.
+2) UNIQUE-> Data in that column should be unique.
+3) PRIMARY KEY -> Data in that column can be uniquely identified based on that column.
+4) FOREIGN KEY -> PRIMARY KEY of another TABLE.
+5) CHECK -> Checking validation of every data, whether it is satisfying a particular condition.
+   **CHECK is only used in CREATE TABLE so while creating the table it checks for the condition.
+
+
+-****AGGREGATE FUNCTION:
+1)COUNT()-> gives number of records.
+2)SUM()-> If we apply SUM() on a particular column then it gives sum of all the records in that column.
+3)AVG()-> Average of all the records in a particular column.
+4)MIN()-> Minimum of all the records in a particular column.
+5)MAX()-> Maximum of all the records in a particular column.
+
+
+-****SQL QUERY TO FIND Nth HIGHEST SALARY
+
+SELECT DISTINCT salary FROM employee ORDER BY salary DESC LIMIT 1 OFFSET(n-1);
+->(n-1) means Skip the first (n-1) rows, for e.g. if we want 3rd highest salary then we would put n = 3 and skips the (3-1) rows, i.e. 1st and 2nd, to get the 3rd highest salary.
+-> matlab which salary (1st, 2nd, 3rd, etc).
+->1 means pick only one data(salary).
+
+-****CREATE COPY OF TABLE
+1) Data with Schema -> create table new select * from old;
+2) Only Schema -> create table new LIKE old;
+
+
+-****PROPERTIES DEFINING THE CORRECTNESS OF DATA.
+-ACID PROPERTIES:
+1) ATOMICITY-> Transaction should be either successful or unsuccessful but not be middleware type(i.e. Atomic).
+2) CONSISTENCY-> Data should be consistent(i.e. Updated).
+3) ISOLATION-> Transactions running in parallel should be isolated from each other(Should not interrupt each other).
+4) DURABILITY-> Transactions should be properly saved even if the system fails.
+
+
+
+-****DATA INTEGRITY:
+- Data integrity refers to the overall accuracy, completeness and reliability of data.
+- Types of Data integrity:
+1) DOMAIN Integrity:- Restricting the format, type, format and volume of data recorded in a database.
+2) ENTITY Integrity:- The purpose is to ensure that data is not recorded multiple times.
+3) REFERENTIAL INTEGRITY:- remove duplicate data records.
+4) User defined INTEGRITY:- fulfill their specific requirements.
+
+
+-****DIFFERE BETW****:
+1) (DML command)DELETE :- we can delete one or more rows at a time(temporary delete, can be undo).
+2) (DDL command)Truncate :- Deletes all the data at a time(permanently deleted) but the structure of the table remains same.
+3) (DDL command)DROP :- Deletes the entire Structure of the table along with data (permanently deleted).
+
+
+1) WHERE :- Applies condition on individual record.(e.g. WHERE marks>18).
+2) HAVING :- Applies condition on group of records.
+
+
+1) GROUP BY :- Grouping of data.
+2) ORDER BY :- Ordering of data(ascending/descending)
+
+
+1) CHAR :- Size is defined(fixed length).
+2) VARCHAR :- Size is not defined(Variable length).
+
+
+1) UNION :- Two tables are joined row-wise.
+2) JOIN :- Two tables are joined column-wise.
+
+
+1) IN :- Works as multiple ORs.(e.g. Delhi OR Mumbai Or Pune OR Nashik).
+2) EXISTS :- Checks whether Record is present or not.(Returns True or False).
+
+
+1) MINUS :- If A-B, then data of B common in A is removed from A.
+2) INTERSECT :- Gives common data between two Tables.
+
+
+1) UNION :- Combines all the data between two tables but excluding the duplicates.
+2) UNION ALL :- Combines all the data between two tables but including the duplicates.
+
+
+
+
+-****TYPES OF JOINS IN SQL****:
+1) INNER JOIN :- Gives common data between the two tables.
+2) LEFT(OUTER) JOIN :- Gives all the data from the left table including the common data between the two tables.
+3) RIGHT(OUTER) JOIN :- Gives all the data from the right table including the common data between the two tables.
+4) FULL(OUTER) JOIN :- Gives all the data from both tables including common data between the two tables.
+
+
+
+
+-****NORMALISATION****:
+- It is a technique to reduce REDUNDANCY(duplicacy) in a table.
+- If there is REDUNDANCY(duplicacy) in table, then it leads to anamolies(problems) in INSERT, UPDATE, DELETE.
+1) INSERT :- Inserting same data multiple times.
+2) UPDATE :- updating data at multiple places.
+3) DELETE :- Delete a data which has multiple copies.
+
+- Types of NORMALISATION:
+1) 1NF - No multi-value attribute.
+2) 2NF - 1NF & No Partial Dependency.
+3) 3NF - 2NF & No Transitive Dependency.
+4) BNF - 3NF & LHS OF FUNCTIONAL DEPENDENCY MUST BE PART OF SUPER KEY.
+
+
+
+-****PATTERN MATCHING****:
+-"LIKE" clause is used for pattern matching task.
+- "%" -> 0 or more character.
+- "_" -> 1 character.
+
+
+Q. Select name of Student whose name starts with 'pa';
+Ans:- Select name from student where name like "pa%";
+
+Q. Select name of student whose name starts with 'p' and contains 3 character in name;
+Ans:- Select name from student where name like "p_ _ _";
+
+
+-****CHARACTER MANIPULATION FUNCTION****
+1)Upper():-> Makes the entire Column data in capital.
+2)Lower():-> Makes the entire Column data in small.
+3)Initcap():-> Makes the first Letter capital.
+4)Length():-> Finds the length of string capital.
+5)Concat():-> Combines the data from two columns in the table(e.g. Name + Surname).
+
+
+
+-****VIEW****:
+- A view is a Virtual table based on the result set of an sql statement.
+- A person can take a part of data in the form of view, and can perform required operations on it, without disturbing the entire data.
+- Syntax: 
+CREATE VIEW view_name AS
+SELECT column1, column2, FROM student WHERE condition.....
+- e.g.- CREATE VIEW abc AS
+        SELECT name, roll_no, FROM student WHERE name="ROHIT";
+
