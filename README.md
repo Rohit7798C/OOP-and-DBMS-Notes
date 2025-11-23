@@ -1,2 +1,3 @@
 # OOP-and-DBMS-Notes
-This repository consists of detailed notes of OOP and DBMS subjects w.r.t interview.
+This repository consists of detailed notes of OOP and DBMS subjects w.r.t interview. 
+Short and Simple answers for quick revision.
